@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Sample "rest-handler-for-plain-text"</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+    <p>RAW Request: <span id="rawRequestData"></span></p>
+    <p>RAW Response: <span id="rawResponseData"></span></p>
+
+    <br />
+
+    <p>POJO Request: <span id="pojoRequestData"></span></p>
+    <p>POJO Response: <span id="pojoResponseData"></span></p>
+    <script type="text/javascript">
+        $(function() {
+            var request = {
+                requestField1: "fieldValue1",
+                requestField2: "fieldValue2"
+            };
+            var requestAsString = JSON.stringify(request);
+
+            $("#rawRequestData").text(requestAsString);
+            $.ajax({
+                type: "POST",
+                url: "/samples/raw",
+                contentType: "application/json",
+                dataType: "json",
+                data: requestAsString
+            }).always(function (data) {
+                $("#rawResponseData").text(JSON.stringify(data));
+            });
+
+            $("#pojoRequestData").text(requestAsString);
+            $.ajax({
+                type: "POST",
+                url: "/samples/pojo",
+                contentType: "application/json",
+                dataType: "json",
+                data: requestAsString
+            }).always(function (data) {
+                $("#pojoResponseData").text(JSON.stringify(data));
+            });
+        });
+    </script>
+</body>
+</html>
